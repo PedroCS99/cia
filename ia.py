@@ -1,9 +1,6 @@
 import time
 import random as rd
 from creation_pop import *
-import sys
-import os
-interface = sys.argv[1]
 
 requete_travail={"voraces_Bureau":{1:"mail_peigne",2:"ENT_peigne",3:"Google_peigne"},
                     "sdi_DGER_cyber":{1:"mail",2:"moodle",3:"cyberrange",4:"cyberrange",5:"cyberrange"},
@@ -105,6 +102,8 @@ h1,m1=apres_rasso_class(h,30,pop)
 def cours_matin(start_h,start_min,population):
     f=open("matin.txt",'w')
     while (start_h!=11) or (start_min!=50):
+        #time.sleep(rd.randint(1,5))
+
         for nom,personne in population.items():
             if (start_h==8 and start_min==1) or (start_h==9 and start_min==50):
                 personne.update_TTPP()
@@ -122,11 +121,8 @@ def cours_matin(start_h,start_min,population):
                         else:
                             f.write(f"{str(start_h)}:{str(start_min)}:{requete}:{personne.ip}\n".format(start_h,start_min,requete,personne.ip))
                             print(f"{str(start_h)}:{str(start_min)}:{requete}:{personne.ip}\n".format(start_h,start_min,requete,personne.ip))
-                            try:
-                                os.system("tcpreplay-edit"+" --mtu-trunc "+ " -i " + interface +" " +" --srcipmap=0.0.0.0/0:"+personne.ip + "/32 "+ " ../requetes/"+requete+".pcap" )
-                            except: 
-                                os.system("tcpreplay-edit"+" --mtu-trunc "+ " -i " + interface +" " +" --srcipmap=0.0.0.0/0:"+personne.ip + "/32 "+ " ../requetes/google.pcap" )
                             time.sleep(rd.randint(1,5))
+                            
                     else:
                         if nom[0:1]=='v':
                             requete=requete_loisir["voraces"+"_"+str(personne.lieu)][rd.randint(1,len(requete_loisir["voraces"+"_"+str(personne.lieu)]))]
@@ -139,12 +135,6 @@ def cours_matin(start_h,start_min,population):
                         else:
                             f.write(f"{str(start_h)}:{str(start_min)}:{requete}:{personne.ip}\n".format(start_h,start_min,requete,personne.ip))
                             print(f"{str(start_h)}:{str(start_min)}:{requete}:{personne.ip}\n".format(start_h,start_min,requete,personne.ip))
-                            try:
-                                os.system("tcpreplay-edit"+" --mtu-trunc "+ " -i " + interface +" " +" --srcipmap=0.0.0.0/0:"+personne.ip + "/32 "+ " ../requetes/"+requete+".pcap" )
-                            except:
-                                os.system("tcpreplay-edit"+" --mtu-trunc "+ " -i " + interface +" " +" --srcipmap=0.0.0.0/0:"+personne.ip + "/32 "+ " ../requetes/google.pcap" )
-                               
-
                             time.sleep(rd.randint(1,5))
             personne.update_lieu()
             personne.update_motivation()
@@ -156,5 +146,3 @@ def cours_matin(start_h,start_min,population):
     f.close()
     return(start_h,start_min)
 h2,m2=cours_matin(8,0,pop)
-
-
