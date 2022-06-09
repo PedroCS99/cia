@@ -1,8 +1,8 @@
 from population import *
 
-nombre_voraces=4
-nombre_sdi=8
-nombre_ssp=8
+nombre_voraces=2
+nombre_sdi=5
+nombre_ssp=5
 
 pop=dict()
 
